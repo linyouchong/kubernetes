@@ -43,22 +43,6 @@ type PersistentVolumeControllerOptions struct {
 	VolumeConfigFlags       VolumeConfigFlags
 }
 
-func NewPersistentVolumeControllerOptions() PersistentVolumeControllerOptions {
-	return PersistentVolumeControllerOptions{
-		PVClaimBinderSyncPeriod: 15 * time.Second,
-		VolumeConfigFlags: VolumeConfigFlags{
-			// default values here
-			PersistentVolumeRecyclerMaximumRetry:             3,
-			PersistentVolumeRecyclerMinimumTimeoutNFS:        300,
-			PersistentVolumeRecyclerIncrementTimeoutNFS:      30,
-			PersistentVolumeRecyclerMinimumTimeoutHostPath:   60,
-			PersistentVolumeRecyclerIncrementTimeoutHostPath: 30,
-			EnableHostPathProvisioning:                       false,
-			EnableDynamicProvisioning:                        true,
-		},
-	}
-}
-
 func (o *PersistentVolumeControllerOptions) AddFlags(fs *pflag.FlagSet) {
 	fs.DurationVar(&o.PVClaimBinderSyncPeriod, "pvclaimbinder-sync-period", o.PVClaimBinderSyncPeriod,
 		"The period for syncing persistent volumes and persistent volume claims")
