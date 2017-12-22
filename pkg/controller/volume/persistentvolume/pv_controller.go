@@ -798,7 +798,7 @@ func (ctrl *PersistentVolumeController) bindVolumeToClaim(volume *v1.PersistentV
 	return volume, nil
 }
 
-// bindVolumeToClaim modifies given volume to be bound to a claim and saves it to
+// updateBindVolumeToClaim modifies given volume to be bound to a claim and saves it to
 // API server. The claim is not modified in this method!
 func (ctrl *PersistentVolumeController) updateBindVolumeToClaim(volumeClone *v1.PersistentVolume, claim *v1.PersistentVolumeClaim, updateCache bool) (*v1.PersistentVolume, error) {
 	glog.V(2).Infof("claim %q bound to volume %q", claimToClaimKey(claim), volumeClone.Name)
@@ -1026,7 +1026,7 @@ func (ctrl *PersistentVolumeController) reclaimVolume(volume *v1.PersistentVolum
 	return nil
 }
 
-// doRerecycleVolumeOperationcycleVolume recycles a volume. This method is
+// recycleVolumeOperation recycles a volume. This method is
 // running in standalone goroutine and already has all necessary locks.
 func (ctrl *PersistentVolumeController) recycleVolumeOperation(arg interface{}) {
 	volume, ok := arg.(*v1.PersistentVolume)
