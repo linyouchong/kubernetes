@@ -168,6 +168,10 @@ func (c *csiDriverClient) NodePublishVolume(
 		glog.Errorf("%v: failed to assert a connection: %v", csiPluginName, err)
 		return err
 	}
+	if err := c.AssertSupportedVersion(ctx, csiVersion); err != nil {
+		glog.Errorf(log("%v:  failed to assert version: %v", csiPluginName, err))
+		return err
+	}
 
 	req := &csipb.NodePublishVolumeRequest{
 		Version:           csiVersion,
@@ -203,6 +207,10 @@ func (c *csiDriverClient) NodeUnpublishVolume(ctx grpctx.Context, volID string, 
 	}
 	if err := c.assertConnection(); err != nil {
 		glog.Error(log("failed to assert a connection: %v", err))
+		return err
+	}
+	if err := c.AssertSupportedVersion(ctx, csiVersion); err != nil {
+		glog.Errorf(log("%v:  failed to assert version: %v", csiPluginName, err))
 		return err
 	}
 
